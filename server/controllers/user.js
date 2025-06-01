@@ -24,3 +24,26 @@ export const getUserBlogs = async (req, res, next) => {
     next(error);
   }
 };
+
+export const followUser = async (req, res, next) => {
+  const targetId = req.params.id;
+  const currentUserId = req.body.currentUser;
+  console.log(targetId, currentUserId);
+
+  if (targetId === currentUserId) {
+    return res.status(400).json({ message: "You can't follow yourself" });
+  }
+  try {
+    await User.findByIdAndUpdate(targetId, {
+      $addToSet: { followers: currentUserId },
+    });
+
+    await User.findByIdAndUpdate(currentUserId, {
+      $addToSet: { following: targetId },
+    });
+    res.status(200).json({ message: "Followed successfully" });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

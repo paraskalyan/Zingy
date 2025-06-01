@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Button, Spinner } from 'flowbite-react'
+import { Alert, Button, Spinner } from 'flowbite-react'
 import React, { useState } from 'react'
 import { FaGoogle } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
@@ -35,6 +35,8 @@ const Login = () => {
             }
         }
         catch (error) {
+            setError(error.response.data.message)
+            setLoading(false)
             console.log(error)
         }
 
@@ -49,7 +51,7 @@ const Login = () => {
         }))
     }
     return (
-        <div className='flex items-center justify-center h-screen'>
+        <div className='flex flex-col items-center justify-center h-screen'>
             {/* <div className='flex-1 h-full relative'>
                 <img className='brightness-50 grayscale' src='https://images.pexels.com/photos/839443/pexels-photo-839443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
             </div> */}
@@ -66,6 +68,9 @@ const Login = () => {
                     </Button>
                 </form>
             </div>
+            {error && <Alert className='mt-10' color="failure" onDismiss={() => setError(null)}>
+                <span className="font-medium">{error}</span>
+            </Alert>}
         </div>
     )
 }

@@ -42,9 +42,7 @@ function App() {
             <Route path='/signup' element={<PublicRoute><Signup /></PublicRoute>} />
             <Route path='/blog/:id' element={<BlogPage />} />
             <Route path='/write' element={<Write />} />
-            <Route path='/profile' element={<Profile />} />
-
-
+            <Route path='/profile/:id' element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

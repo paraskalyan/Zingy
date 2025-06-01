@@ -4,6 +4,7 @@ import { FaPen } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { signOut } from '../redux/user/userSlice'
+import { current } from '@reduxjs/toolkit'
 
 const Navbar = () => {
   const currentUser = useSelector((state) => state.user.currentUser)
@@ -59,7 +60,7 @@ const UserAvatar = () => {
           <span className="block text-sm ">{currentUser.username}</span>
           <span className="block truncate text-sm font-medium">{currentUser.email}</span>
         </DropdownHeader>
-        <DropdownItem onClick={() => navigate('/profile')}>Profile</DropdownItem>
+        <DropdownItem onClick={() => navigate(`/profile/${currentUser._id}`)}>Profile</DropdownItem>
         <DropdownDivider />
         <DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
       </Dropdown>
