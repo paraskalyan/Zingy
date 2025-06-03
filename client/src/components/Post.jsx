@@ -21,7 +21,7 @@ const Post = ({ blog }) => {
         <div onClick={openBlogPage} className=' space-y-2 flex flex-col justify-between cursor-pointer hover:bg-[#f8f8f8] p-3 shadow-md'>
             <img className=' hover:brightness-90' src='https://codesupply.co/_next/image/?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fix6yojsv%2Fproduction%2Ffb67e96e45b30f4f561fe34b54e9fa866ea5ad9d-1600x900.webp&w=1080&q=95' />
             <h6 className='text-[14px] text-gray-700'>{blog.category}</h6>
-            <h1 className='text-xl font-bold'>{blog.title}</h1>
+            <h1 className='text-xl font-bold break-words'>{blog.title}</h1>
             {/* <h3 className='text-gray-700 text-[14px]' dangerouslySetInnerHTML={{ __html: blog.content }}>   </h3> */}
             <div className='flex gap-4 mt-3'>
                 <img width={20} className='rounded-full' src={user.avatar} />

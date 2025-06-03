@@ -55,7 +55,8 @@ const Write = () => {
 
     return (
         <div className='my-10 mx-[15%] h-auto space-y-2'>
-            <form onSubmit={handleFormSubmit}>
+            <h1 className='font-semibold text-center text-2xl mb-5'>Write your story</h1>
+            <form className='space-y-6' onSubmit={handleFormSubmit}>
                 <input
                     onChange={handleInputChange}
                     name='title'

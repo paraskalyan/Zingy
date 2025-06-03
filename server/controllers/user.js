@@ -47,3 +47,26 @@ export const followUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const unfollowUser = async (req, res, next) => {
+  const targetId = req.params.id;
+  const currentUserId = req.body.currentUser;
+  console.log(targetId, currentUserId);
+
+  if (targetId === currentUserId) {
+    return res.status(400).json({ message: "You can't unfollow yourself" });
+  }
+  try {
+    await User.findByIdAndUpdate(targetId, {
+      $pull: { followers: currentUserId },
+    });
+
+    await User.findByIdAndUpdate(currentUserId, {
+      $pull: { following: targetId },
+    });
+    res.status(200).json({ message: "Followed successfully" });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

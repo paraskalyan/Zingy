@@ -13,6 +13,7 @@ import Write from './pages/Write'
 import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import PublicRoute from './components/PublicRoute'
+import EditPage from './pages/EditPage'
 
 const customTheme = createTheme({
   button: {
@@ -24,14 +25,34 @@ const customTheme = createTheme({
       lg: "px-6 py-3 text-lg",
     },
   },
+
+  modal: {
+    root: {
+      base: 'bg-white rounded-lg shadow-md'
+    },
+    header: {
+      base: 'bg-white'
+    },
+    body: {
+      base: 'bg-white'
+    }
+  },
+
+  textInput: {
+    field: {
+      input: {
+        colors: {
+          custom: ''
+        }
+      }
+    }
+  }
 });
 
 function App() {
 
   return (
     <>
-
-
       <ThemeProvider theme={customTheme}>
 
         <BrowserRouter>
@@ -43,6 +64,7 @@ function App() {
             <Route path='/blog/:id' element={<BlogPage />} />
             <Route path='/write' element={<Write />} />
             <Route path='/profile/:id' element={<Profile />} />
+            <Route path='/post/:postId/edit' element={<EditPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
