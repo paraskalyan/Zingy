@@ -99,3 +99,22 @@ export const updateUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteUser = async (req, res, next) => {
+  console.log("Delete user");
+  const userId = req.params.id;
+  if (userId !== req.user.id) {
+    console.log("Not authorised");
+    return;
+  }
+
+  try {
+    const deleted = await User.findByIdAndDelete(userId);
+    const deletePosts = await Post.deleteMany({ author: userId });
+
+    res.status(200).json({ mesage: "Deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

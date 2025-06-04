@@ -2,7 +2,7 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 export const Signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, fullName, email, password } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ message: "All fields required" });
@@ -21,7 +21,12 @@ export const Signup = async (req, res, next) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword }); // fixed here
+    const newUser = new User({
+      username,
+      fullName,
+      email,
+      password: hashedPassword,
+    }); // fixed here
     await newUser.save();
 
     return res.status(201).json({ message: "Signup successful" });

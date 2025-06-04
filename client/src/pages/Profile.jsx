@@ -1,23 +1,26 @@
 import axios from 'axios'
 import { Button, Modal, ModalBody, ModalHeader } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router'
 import useFetchUser from '../hooks/useFetchUser'
 import Loader from '../components/Loader'
 import Post from '../components/Post'
 import EditProfile from '../components/EditProfile'
 import { HiOutlineTrash } from 'react-icons/hi'
+import { signOut } from '../redux/user/userSlice'
 
 const Profile = () => {
     const { id } = useParams();
     const { user, loading } = useFetchUser(id);
     const currentUser = useSelector(state => state.user.currentUser);
+    const navigate = useNavigate();
 
     const [followers, setFollowers] = useState([]);
     const [blogs, setBlogs] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false)
+    const dispatch = useDispatch()
 
 
     // Sync followers once user is fetched
@@ -63,7 +66,14 @@ const Profile = () => {
 
     const deleteAccount = async () => {
         try {
-            const res = await axios.delete(`http://localhost:4000`)
+            const res = await axios.delete(`http://localhost:4000/api/user/deleteuser/${currentUser._id}`, {
+                withCredentials: true,
+            })
+            console.log(res.data)
+            if (res) {
+                dispatch(signOut())
+                navigate('/login')
+            }
         }
         catch (error) {
             console.log(error)
@@ -107,7 +117,7 @@ const Profile = () => {
                                     Are you sure you want to delete this post?
                                 </h3>
                                 <div className="flex justify-center gap-4">
-                                    <Button className='' color="failure">
+                                    <Button className='' onClick={deleteAccount} color="failure">
                                         {"Yes, I'm sure"}
                                     </Button>
                                     <Button color="gray" onClick={() => setOpenModal(false)}>

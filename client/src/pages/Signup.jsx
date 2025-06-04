@@ -10,6 +10,7 @@ const Signup = () => {
 
     const [formData, setFormData] = useState({
         username: '',
+        fullName: '',
         email: '',
         password: '',
     })
@@ -25,7 +26,7 @@ const Signup = () => {
             ...formData,
             username: formData.username.replace(/\s/g, ""),
         };
-        const fields = ['username', 'email', 'password'];
+        const fields = ['username', 'fullName', 'email', 'password'];
         const hasEmpty = fields.some(field => formData[field].trim() === '');
 
         if (hasEmpty) {
@@ -69,6 +70,7 @@ const Signup = () => {
                 <h1 className='font-bold text-2xl my-4'>Sign up</h1>
                 <form onSubmit={handleFormSubmit} className='flex flex-col gap-2'>
                     <input name='username' onChange={handleInputChange} placeholder='Enter username' required type='text' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
+                    <input name='fullName' onChange={handleInputChange} placeholder='Enter Full name' required type='text' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
                     <input name='email' onChange={handleInputChange} placeholder='Enter your email address' required type='email' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
                     <input minLength={8} name='password' onChange={handleInputChange} placeholder='Enter your password' required type='password' className='outline-blue-500 border rounded-full border-gray-300 px-3 py-2' />
                     <Button type='submit' className='mt-3 cursor-pointer outline-none'>{loading ? <Spinner light /> : 'Sign up'}</Button>
