@@ -75,27 +75,31 @@ function BlogPage() {
     }
     return (
         <div className=' mx-[25%] relative  space-y-2 text-justify py-10'>
-            <PostMenu setOpenModal={setOpenModal} />
-            <Modal theme={modalTheme}
-                show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
-                <ModalHeader className=''>Confirm Delete</ModalHeader>
-                <ModalBody>
-                    <div className="text-center">
-                        <HiOutlineTrash className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                            Are you sure you want to delete this post?
-                        </h3>
-                        <div className="flex justify-center gap-4">
-                            <Button className='' color="failure" onClick={handlePostDelete}>
-                                {"Yes, I'm sure"}
-                            </Button>
-                            <Button color="gray" onClick={() => setOpenModal(false)}>
-                                No, cancel
-                            </Button>
-                        </div>
-                    </div>
-                </ModalBody>
-            </Modal>
+            {currentUser &&
+                <>
+                    <PostMenu setOpenModal={setOpenModal} />
+                    <Modal theme={modalTheme}
+                        show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+                        <ModalHeader className=''>Confirm Delete</ModalHeader>
+                        <ModalBody>
+                            <div className="text-center">
+                                <HiOutlineTrash className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    Are you sure you want to delete this post?
+                                </h3>
+                                <div className="flex justify-center gap-4">
+                                    <Button className='' color="failure" onClick={handlePostDelete}>
+                                        {"Yes, I'm sure"}
+                                    </Button>
+                                    <Button color="gray" onClick={() => setOpenModal(false)}>
+                                        No, cancel
+                                    </Button>
+                                </div>
+                            </div>
+                        </ModalBody>
+                    </Modal>
+                </>
+            }
             <h6 className='text-[13px] text-gray-700'>
                 Published May 30, 2025</h6>
             <h1 className='text-4xl font-bold'>{blog.title}</h1>

@@ -5,6 +5,7 @@ import { FaGoogle } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../redux/user/userSlice'
 import { useNavigate } from 'react-router'
+import OAuth from '../components/OAuth'
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -66,6 +67,7 @@ const Login = () => {
                         <span className='mx-2'>Log in with Google </span>
                         <FaGoogle />
                     </Button>
+                    <OAuth />
                 </form>
             </div>
             {error && <Alert className='mt-10' color="failure" onDismiss={() => setError(null)}>

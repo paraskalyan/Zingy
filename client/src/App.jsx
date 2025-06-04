@@ -14,11 +14,12 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import PublicRoute from './components/PublicRoute'
 import EditPage from './pages/EditPage'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const customTheme = createTheme({
   button: {
     color: {
-      primary: "bg-gray-900 text-white cursor-pointer rounded-full hover:bg-white hover:text-black focus:ring-1 focus:ring-gray-300 focus:outline-none transition",
+      primary: "bg-gray-900 text-white cursor-pointer rounded-full hover:bg-white hover:text-black focus:ring-1 focus:ring-gray-300 focus:outline-none border transition",
       secondary: "",
     },
     size: {
@@ -27,9 +28,6 @@ const customTheme = createTheme({
   },
 
   modal: {
-    root: {
-      base: 'bg-white rounded-lg shadow-md'
-    },
     header: {
       base: 'bg-white'
     },
@@ -42,8 +40,9 @@ const customTheme = createTheme({
     field: {
       input: {
         colors: {
-          custom: ''
-        }
+          custom: 'bg-[#f9f9f9] border border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none'
+        },
+        base: ' rounded-full border border-gray-400 focus:ring-1 focus:ring-gray-300 focus:outline-none',
       }
     }
   }
@@ -61,10 +60,11 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<PublicRoute><Login /></PublicRoute>} />
             <Route path='/signup' element={<PublicRoute><Signup /></PublicRoute>} />
-            <Route path='/blog/:id' element={<BlogPage />} />
-            <Route path='/write' element={<Write />} />
-            <Route path='/profile/:id' element={<Profile />} />
-            <Route path='/post/:postId/edit' element={<EditPage />} />
+
+            <Route path='/blog/:id' element={<ProtectedRoute><BlogPage /></ProtectedRoute>} />
+            <Route path='/write' element={<ProtectedRoute><Write /></ProtectedRoute>} />
+            <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path='/post/:postId/edit' element={<ProtectedRoute><EditPage /></ProtectedRoute>} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -70,3 +70,32 @@ export const unfollowUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateUser = async (req, res, next) => {
+  console.log("Update user");
+  const userId = req.params.id;
+  if (userId !== req.user.id) {
+    console.log("Not authorised");
+    return;
+  }
+
+  try {
+    const update = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          username: req.body.username,
+          fullName: req.body.fullName,
+          email: req.body.email,
+          bio: req.body.bio,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ mesage: "Updated successfully", user: update });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

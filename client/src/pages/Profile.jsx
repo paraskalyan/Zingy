@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Button } from 'flowbite-react'
+import { Button, Modal, ModalBody, ModalHeader } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
@@ -7,6 +7,7 @@ import useFetchUser from '../hooks/useFetchUser'
 import Loader from '../components/Loader'
 import Post from '../components/Post'
 import EditProfile from '../components/EditProfile'
+import { HiOutlineTrash } from 'react-icons/hi'
 
 const Profile = () => {
     const { id } = useParams();
@@ -16,6 +17,8 @@ const Profile = () => {
     const [followers, setFollowers] = useState([]);
     const [blogs, setBlogs] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false)
+
 
     // Sync followers once user is fetched
     useEffect(() => {
@@ -58,6 +61,16 @@ const Profile = () => {
         }
     };
 
+    const deleteAccount = async () => {
+        try {
+            const res = await axios.delete(`http://localhost:4000`)
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+    }
+
     if (loading) return <Loader />;
 
     const isFollowing = followers.includes(currentUser._id);
@@ -67,9 +80,9 @@ const Profile = () => {
             <div className='flex items-center gap-3 p-3 border-b border-[#d9d9d9]'>
                 <img className='rounded-full p-3 aspect-square bg-[#f8f8f8]' width={120} src={user.avatar} />
 
-                <div className='flex-1 space-y-3'>
-                    <h2 className='text-xl font-medium'>{user.username}</h2>
-                    <h6 className='text-[14px]'>{user.bio}</h6>
+                <div className='flex-1 space-y-0'>
+                    <h2 className='text-xl font-medium'>{user.fullName}</h2>
+                    <h6 className='text-[14px] mb-4'>{user.bio}</h6>
 
                     {currentUser._id === id ? (
                         <Button color='primary' onClick={() => setOpenModal(true)}>Edit Profile</Button>
@@ -82,7 +95,28 @@ const Profile = () => {
                         </Button>
                     )}
 
-                    <EditProfile openModal={openModal} setOpenModal={setOpenModal} />
+                    <EditProfile openModal={openModal} setOpenModal={setOpenModal} user={user} />
+                    <Button onClick={() => setDeleteModal(true)} color='primary' className='bg-red-700'>Delete account</Button>
+                    <Modal
+                        show={deleteModal} size="md" onClose={() => setDeleteModal(false)} popup>
+                        <ModalHeader className=''>Confirm Delete</ModalHeader>
+                        <ModalBody>
+                            <div className="text-center">
+                                <HiOutlineTrash className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    Are you sure you want to delete this post?
+                                </h3>
+                                <div className="flex justify-center gap-4">
+                                    <Button className='' color="failure">
+                                        {"Yes, I'm sure"}
+                                    </Button>
+                                    <Button color="gray" onClick={() => setOpenModal(false)}>
+                                        No, cancel
+                                    </Button>
+                                </div>
+                            </div>
+                        </ModalBody>
+                    </Modal>
                 </div>
 
                 <div className='flex-1 flex gap-8'>

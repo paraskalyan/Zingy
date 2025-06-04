@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
+  fullName: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -24,6 +28,7 @@ const UserSchema = new mongoose.Schema({
   bio: {
     type: String,
     maxLength: 200,
+    default: "This is the user bio",
   },
   followers: [
     {
