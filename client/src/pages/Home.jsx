@@ -21,7 +21,7 @@ const Home = () => {
         const fetchBlogs = async () => {
             try {
                 console.log("gone")
-                const res = await axios.get(`http://localhost:4000/api/blog/getAll?search=${searchQuery}`)
+                const res = await axios.get(`http://192.168.29.102:4000/api/blog/getAll?search=${searchQuery}`)
                 // setBlogs(res.data)
                 dispatch(setBlogs(res.data))
 
@@ -39,14 +39,14 @@ const Home = () => {
     if (loading) return <Loader />
     return (
         <div className='flex  mx-[10%] py-10 gap-4'>
-            <div className='flex-[3] grid grid-cols-2  gap-10'>
+            <div className='flex-[3] grid grid-cols-2 max-sm:grid-cols-1  gap-10'>
                 {
                     blogs.map((blog, index) => {
                         return <Post key={index} blog={blog} />
                     })
                 }
             </div>
-            <div className='flex-[1] border-l border-l-gray-200 p-4'>
+            <div className='flex-[1] max-sm:hidden border-l border-l-gray-200 p-4'>
                 <h1 className='text-3xl font-bold'>Unleash you thoughts</h1>
                 <h6>Write your story</h6>
             </div>

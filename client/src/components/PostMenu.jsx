@@ -14,7 +14,7 @@ const PostMenu = ({ setOpenModal }) => {
             </button>
 
             {open && (
-                <div className="absolute right-0 z-10 mt-2 w-40 bg-[#f8f8f8] rounded-md shadow-md ">
+                <div className="absolute right-0 z-10 mt-2 w-40 bg-[#fcfcfc] border border-[#f8f8f8] rounded-md shadow-sm ">
                     <div className="py-1">
                         <button
                             onClick={() => {

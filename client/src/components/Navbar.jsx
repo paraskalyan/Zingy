@@ -38,12 +38,14 @@ const Navbar = () => {
 
 
   return (
-    <div className='flex py-3 px-6 justify-between items-center  h-[7vh] border-b border-b-[#f8f8f8]'>
+    <div className='flex py-3 px-6 justify-between items-center border-b border-b-[#f8f8f8]'>
       <Link to='/'><img width='100' src='/logo-zingy.png' /></Link>
-      <div className='flex items-center gap-2 bg-[#f7f7f7] px-4 py-2 rounded-full'>
-        <FaSearch size={15} color='gray' />
-        <input onChange={handleChange} className=' outline-none ' placeholder='Search blogs' />
-      </div>
+      {currentUser &&
+        <div className='flex items-center gap-2 bg-[#f7f7f7] px-4 py-2 rounded-full'>
+          <FaSearch size={15} color='gray' />
+          <input onChange={handleChange} className=' outline-none ' placeholder='Search blogs' />
+        </div>
+      }
       <div className='flex items-center gap-4'>
 
         {currentUser ?

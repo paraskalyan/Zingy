@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { signIn } from '../redux/user/userSlice'
 import { useNavigate } from 'react-router'
 import OAuth from '../components/OAuth'
+
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -52,23 +53,30 @@ const Login = () => {
         }))
     }
     return (
-        <div className='flex flex-col items-center justify-center h-screen'>
+        <div className='flex items-center mx-auto container justify-center min-h-screen'>
             {/* <div className='flex-1 h-full relative'>
                 <img className='brightness-50 grayscale' src='https://images.pexels.com/photos/839443/pexels-photo-839443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
             </div> */}
-            <div className=' flex flex-col items-start justify-center'>
+            <div className='flex w-full '>
 
-                <h1 className='font-bold text-2xl my-4'>Log in into your account</h1>
-                <form onSubmit={handleFormSubmit} className='flex flex-col gap-2'>
-                    <input name='username' onChange={handleInputChange} placeholder='Enter your username' required type='text' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
-                    <input name='password' onChange={handleInputChange} placeholder='Enter your password' required type='password' className='outline-blue-500 border rounded-full border-gray-300 px-3 py-2' />
-                    <Button type='submit' className='mt-3 cursor-pointer outline-none'>{loading ? <Spinner light /> : 'Log in'}</Button>
-                    <Button type='button' outline className='outline-none' color='dark' >
-                        <span className='mx-2'>Log in with Google </span>
-                        <FaGoogle />
-                    </Button>
-                    <OAuth />
-                </form>
+                <div className='flex-1 py-4 bg-[#f5f5f5] flex flex-col justify-evenly items-center rounded-2xl '>
+                    <img src='/blog.svg' width={600} alt="Logo" />
+                    <h1 className='font-bold text-4xl'>Tell your story on ZINGY</h1>
+                </div>
+                <div className='flex-1 flex flex-col  items-center justify-center '>
+                    <h1 className='font-bold text-[3rem]'>Welcome back!</h1>
+                    <h1 className='font-bold text-lg my-4'>Log in into your account</h1>
+                    <form onSubmit={handleFormSubmit} className='flex flex-col gap-2'>
+                        <input name='username' onChange={handleInputChange} placeholder='Enter your username' required type='text' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
+                        <input name='password' onChange={handleInputChange} placeholder='Enter your password' required type='password' className='outline-blue-500 border rounded-full border-gray-300 px-3 py-2' />
+                        <Button type='submit' className='mt-3 cursor-pointer outline-none'>{loading ? <Spinner light /> : 'Log in'}</Button>
+                        <Button type='button' outline className='outline-none' color='dark' >
+                            <span className='mx-2'>Log in with Google </span>
+                            <FaGoogle />
+                        </Button>
+                        <OAuth />
+                    </form>
+                </div>
             </div>
             {error && <Alert className='mt-10' color="failure" onDismiss={() => setError(null)}>
                 <span className="font-medium">{error}</span>

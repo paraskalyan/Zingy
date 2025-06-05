@@ -95,7 +95,11 @@ const Profile = () => {
                     <h6 className='text-[14px] mb-4'>{user.bio}</h6>
 
                     {currentUser._id === id ? (
-                        <Button color='primary' onClick={() => setOpenModal(true)}>Edit Profile</Button>
+                        <div className='flex gap-5'>
+                            <Button color='primary' onClick={() => setOpenModal(true)}>Edit Profile</Button>
+                            <Button onClick={() => setDeleteModal(true)} color='primary' className='bg-red-700'>Delete account</Button>
+                        </div>
+
                     ) : (
                         <Button
                             color='primary'
@@ -106,7 +110,6 @@ const Profile = () => {
                     )}
 
                     <EditProfile openModal={openModal} setOpenModal={setOpenModal} user={user} />
-                    <Button onClick={() => setDeleteModal(true)} color='primary' className='bg-red-700'>Delete account</Button>
                     <Modal
                         show={deleteModal} size="md" onClose={() => setDeleteModal(false)} popup>
                         <ModalHeader className=''>Confirm Delete</ModalHeader>

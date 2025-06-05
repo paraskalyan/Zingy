@@ -77,7 +77,10 @@ function BlogPage() {
         <div className=' mx-[25%] relative  space-y-2 text-justify py-10'>
             {currentUser &&
                 <>
-                    <PostMenu setOpenModal={setOpenModal} />
+                    <div className='absolute right-0'>
+
+                        <PostMenu setOpenModal={setOpenModal} />
+                    </div>
                     <Modal theme={modalTheme}
                         show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
                         <ModalHeader className=''>Confirm Delete</ModalHeader>
