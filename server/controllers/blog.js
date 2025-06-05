@@ -16,7 +16,6 @@ export const create = async (req, res, next) => {
 };
 
 export const getBlog = async (req, res, next) => {
-  console.log("Sadfsdfsdfsdfsdf");
   const { id } = req.params;
   console.log(id);
   try {
@@ -32,15 +31,32 @@ export const getBlog = async (req, res, next) => {
 };
 
 export const getAllBlogs = async (req, res, next) => {
-  try {
-    const post = await Post.find().sort({ createdAt: -1 });
-    if (!post) {
-      console.log("No blogs");
+  const query = req.query.search;
+  console.log("inside");
+  console.log(query);
+  if (query) {
+    try {
+      const blogs = await Post.find({
+        $or: [
+          { title: { $regex: query, $options: "i" } },
+          { content: { $regex: query, $options: "i" } },
+        ],
+      });
+      res.status(200).json(blogs);
+    } catch (err) {
+      console.log(err);
     }
-    res.status(200).json(post);
-  } catch (error) {
-    console.log(error);
-    next(error);
+  } else {
+    try {
+      const post = await Post.find().sort({ createdAt: -1 });
+      if (!post) {
+        console.log("No blogs");
+      }
+      res.status(200).json(post);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
   }
 };
 
@@ -89,5 +105,26 @@ export const deletePost = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     next(error);
+  }
+};
+
+export const searchBlogs = async (req, res, next) => {
+  const query = req.query.q;
+  try {
+    if (!query) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    const blogs = await Post.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+      ],
+    });
+
+    res.status(200).json(blogs);
+  } catch (err) {
+    console.error("Search error:", err);
+    next(err);
   }
 };

@@ -6,16 +6,25 @@ import { useState } from 'react'
 import { Spinner } from 'flowbite-react'
 import Loader from '../components/Loader'
 import Post from '../components/Post'
+import { useDispatch, useSelector } from 'react-redux'
+import { setBlogs } from '../redux/blog/blogSlice'
 
 const Home = () => {
-    const [blogs, setBlogs] = useState(null)
+    // const [blogs, setBlogs] = useState(null)
     const [loading, setLoading] = useState(true)
+    const dispatch = useDispatch()
+    const blogs = useSelector((state) => state.blogs.blogs)
+    const searchQuery = useSelector(state => state.searchQuery.searchQuery)
+    console.log(searchQuery)
+
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const res = await axios.get('http://localhost:4000/api/blog/getAll')
-                setBlogs(res.data)
-                console.log(res.data)
+                console.log("gone")
+                const res = await axios.get(`http://localhost:4000/api/blog/getAll?search=${searchQuery}`)
+                // setBlogs(res.data)
+                dispatch(setBlogs(res.data))
+
             }
             catch (error) {
                 console.log(error)
@@ -25,7 +34,7 @@ const Home = () => {
             }
         }
         fetchBlogs()
-    }, [])
+    }, [searchQuery])
 
     if (loading) return <Loader />
     return (
