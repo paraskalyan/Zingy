@@ -3,8 +3,10 @@ import { app } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { signIn } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { Button } from "flowbite-react";
+import { FaGoogle } from "react-icons/fa";
 
-export default function OAuth() {
+export default function OAuth({ text }) {
     const dispatch = useDispatch();
     const auth = getAuth(app);
 
@@ -36,8 +38,9 @@ export default function OAuth() {
     };
 
     return (
-        <button type="button" onClick={handleGoogleClick}>
-            Sign in with GOOGLE
-        </button>
+        <Button type='button' className='outline-none' color='primary' onClick={handleGoogleClick} >
+            <span className='mx-2'>{text} </span>
+            <FaGoogle />
+        </Button>
     );
 }

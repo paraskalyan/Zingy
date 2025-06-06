@@ -74,7 +74,7 @@ function BlogPage() {
         return <Loader />
     }
     return (
-        <div className=' mx-[25%] relative  space-y-2 text-justify py-10'>
+        <div className=' mx-[25%] max-sm:mx-6 overflow-hidden relative  space-y-2 text-justify py-10'>
             {currentUser &&
                 <>
                     <div className='absolute right-0'>
@@ -108,9 +108,10 @@ function BlogPage() {
             <h1 className='text-4xl font-bold'>{blog.title}</h1>
             <div className='flex gap-2 items-center'>
                 <Link to={`/profile/${blog.author}`}><img width={40} className='rounded-full' src={user.avatar} /></Link>
-                <h6 className='text-[13px] text-gray-700'>By {user.username}</h6>
+                <h6 className='text-[13px] text-gray-700'>By {user.fullName}</h6>
             </div>
-            <p className='mt-10' dangerouslySetInnerHTML={{ __html: blog.content }}>
+            <img src={blog.image} className='mt-10 w-full' />
+            <p className='mt-6' dangerouslySetInnerHTML={{ __html: blog.content }}>
 
             </p>
             <h1 className='text-2xl font-bold mt-20'>Responses</h1>

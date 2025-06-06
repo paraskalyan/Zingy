@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { FaGoogle } from 'react-icons/fa'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import OAuth from '../components/OAuth'
+import { Link } from 'react-router'
 
 const Signup = () => {
     const user = useSelector((state) => state.user.currentUser)
@@ -61,24 +63,24 @@ const Signup = () => {
     }
 
     return (
-        <div className='flex items-center justify-center h-screen'>
-            <div className='flex-1 h-full'>
-                <img className='brightness-50 grayscale' src='https://images.pexels.com/photos/839443/pexels-photo-839443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
+        <div className='flex flex-row-reverse items-center mx-auto justify-center h-screen'>
+            <div className=' flex-1 hidden py-4 bg-[#f5f5f5] h-full lg:flex flex-col justify-evenly items-center '>
+                <img width={600} src='/singup.svg' />
             </div>
-            <div className='flex-1 flex flex-col items-start justify-center'>
+            <div className='flex-1 flex flex-col items-center justify-center'>
+                <h1 className='font-bold text-[2.5rem]'>Welcome to ZINGY!</h1>
 
-                <h1 className='font-bold text-2xl my-4'>Sign up</h1>
+                <h1 className='font-bold text-lg my-4'>Sign up</h1>
                 <form onSubmit={handleFormSubmit} className='flex flex-col gap-2'>
                     <input name='username' onChange={handleInputChange} placeholder='Enter username' required type='text' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
                     <input name='fullName' onChange={handleInputChange} placeholder='Enter Full name' required type='text' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
                     <input name='email' onChange={handleInputChange} placeholder='Enter your email address' required type='email' className='outline-blue-500 w-[320px] border rounded-full border-gray-300 px-3 py-3' />
-                    <input minLength={8} name='password' onChange={handleInputChange} placeholder='Enter your password' required type='password' className='outline-blue-500 border rounded-full border-gray-300 px-3 py-2' />
-                    <Button type='submit' className='mt-3 cursor-pointer outline-none'>{loading ? <Spinner light /> : 'Sign up'}</Button>
-                    <Button type='button' outline className='outline-none' color='dark' >
-                        <span className='mx-2'>Sign up with Google </span>
-                        <FaGoogle />
-                    </Button>
+                    <input minLength={8} name='password' onChange={handleInputChange} placeholder='Enter your password' required type='password' className='outline-blue-500 border rounded-full border-gray-300 px-3 py-3' />
+                    <Button type='submit' color='primary' className='mt-3 cursor-pointer outline-none'>{loading ? <Spinner light /> : 'Sign up'}</Button>
+                    <OAuth text='Sign up with Google' />
                 </form>
+                <h1 className='mt-10'>Already a member? <Link to='/login' className='text-blue-700 hover:underline'>Log in here</Link></h1>
+
                 {error && <Alert className='mt-10' color="failure" onDismiss={() => setError(null)}>
                     <span className="font-medium">{error}</span>
                 </Alert>}

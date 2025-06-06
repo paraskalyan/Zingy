@@ -6,7 +6,9 @@
   margin: 0;
   padding: 0;
 }
-
+.nunito {
+  font-family: "Nunito";
+}
 /* HTML: <div class="loader"></div> */
 .loader {
   width: 45px;

@@ -1,17 +1,24 @@
 import axios from 'axios';
-import { Button, Dropdown, DropdownItem } from 'flowbite-react';
+import { Button, Dropdown, DropdownItem, FileInput, Label, Spinner } from 'flowbite-react';
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { useNavigate } from 'react-router'
 import Skeleton from '../components/Skeleton';
+import { storage } from '../appwrite';
+import { ID } from 'appwrite';
 const Write = () => {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         title: '',
         content: '',
         category: 'Select category',
+        image: ''
+
     });
+    const [file, setFile] = useState(null);
+    const [uploadedUrl, setUploadedUrl] = useState('');
+    const [imageLoading, setImageLoading] = useState(false)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -35,6 +42,29 @@ const Write = () => {
         }));
     };
 
+    const handleUpload = async () => {
+        setImageLoading(true)
+        try {
+            const result = await storage.createFile(
+                '6842eebd0035b1c921e7',
+                ID.unique(),
+                file
+            );
+            console.log('File uploaded:', result);
+
+            const url = storage.getFileView('6842eebd0035b1c921e7', result.$id);
+            setFormData({
+                ...formData,
+                image: url,
+            })
+        } catch (error) {
+            console.error('Upload failed:', error);
+        }
+        finally {
+            setImageLoading(false)
+        }
+    }
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
@@ -54,7 +84,7 @@ const Write = () => {
     };
 
     return (
-        <div className='my-10 mx-[15%] h-auto space-y-2'>
+        <div className='my-10 mx-[15%] max-sm:mx-6 h-auto space-y-2'>
             <h1 className='font-semibold text-center text-2xl mb-5'>Write your story</h1>
             <form className='space-y-6' onSubmit={handleFormSubmit}>
                 <input
@@ -66,7 +96,7 @@ const Write = () => {
 
                 <ReactQuill
                     theme='snow'
-                    className='h-[400px]'
+                    className='h-[400px] max-sm:h-[600px]'
                     value={formData.content}
                     placeholder='Write your content'
                     onChange={handleContentChange}
@@ -81,8 +111,17 @@ const Write = () => {
                         ))}
                     </Dropdown>
                 </div>
+                <div className='inline-flex max-sm:flex-col max-sm:w-full gap-3'>
 
-                <Button type='submit' color='primary'>
+                    <Label className="" color='black'>
+                        Upload image
+                    </Label>
+                    <FileInput onChange={e => setFile(e.target.files[0])} id="file-upload" />
+                    <Button onClick={handleUpload}>{imageLoading ? <span className='inline-flex gap-2'>Uploading <Spinner size='sm' color='light' /></span> : 'Upload'}</Button>
+                </div>
+                {uploadedUrl && <img width={500} src={uploadedUrl} />}
+
+                <Button type='submit' className='max-sm:w-full max-sm:py-6' color='primary'>
                     Publish
                 </Button>
             </form>

@@ -41,7 +41,7 @@ const Navbar = () => {
     <div className='flex py-3 px-6 justify-between items-center border-b border-b-[#f8f8f8]'>
       <Link to='/'><img width='100' src='/logo-zingy.png' /></Link>
       {currentUser &&
-        <div className='flex items-center gap-2 bg-[#f7f7f7] px-4 py-2 rounded-full'>
+        <div className='flex items-center gap-2 bg-[#f7f7f7] px-4 py-2 rounded-full max-sm:hidden'>
           <FaSearch size={15} color='gray' />
           <input onChange={handleChange} className=' outline-none ' placeholder='Search blogs' />
         </div>
@@ -50,7 +50,9 @@ const Navbar = () => {
 
         {currentUser ?
           <>
-            <Link to='/write' className='flex items-center gap-1 mx-4'><span>Write</span><span><FaPen /></span> </Link>
+            <Link to='/write' className='flex items-center gap-1 mx-4 max-sm:hidden'><span>Write</span><span><FaPen /></span> </Link>
+            <Link to='/write' className='max-sm:flex items-center gap-1 mx-2 bg-[#f1f1f1] p-3 hidden rounded-full'><span><FaPen size={18} /></span> </Link>
+
             <UserAvatar />
             {/* <Link to='/profile'><img className='rounded-full' width={30} src={currentUser.avatar} /></Link>
             <Button onClick={handleLogout} style={{ cursor: 'pointer' }} color='red' >Log out</Button> */}

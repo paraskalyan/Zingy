@@ -43,7 +43,7 @@ function EditPage() {
 
 
     return (
-        <div className='my-10 mx-[15%] h-auto space-y-2'>
+        <div className='my-10 mx-[15%] max-sm:mx-6 h-auto space-y-2'>
             <h1 className='text-3xl font-semibold mb-5'>Edit post</h1>
             <form className='space-y-3' onSubmit={handleFormSubmit}>
                 <input
@@ -58,7 +58,7 @@ function EditPage() {
 
                 <ReactQuill
                     theme='snow'
-                    className='h-[400px]'
+                    className='min-h-[400px]'
                     placeholder='Write your content'
                     value={formData.content}
                     onChange={(value) => {

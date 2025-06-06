@@ -17,7 +17,6 @@ export const create = async (req, res, next) => {
 
 export const getBlog = async (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const post = await Post.findById(id);
     if (!post) {
@@ -32,8 +31,6 @@ export const getBlog = async (req, res, next) => {
 
 export const getAllBlogs = async (req, res, next) => {
   const query = req.query.search;
-  console.log("inside");
-  console.log(query);
   if (query) {
     try {
       const blogs = await Post.find({
@@ -65,7 +62,7 @@ export const updatePost = async (req, res, next) => {
   const postId = req.params.postid;
   const userId = req.params.userid;
   if (userId !== req.user.id) {
-    console.log("Not authorised");
+    res.status(401).json({ message: "Not authorised" });
     return;
   }
 
@@ -82,7 +79,7 @@ export const updatePost = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(200).json({ mesage: "Updated successfully" });
+    res.status(200).json({ message: "Updated successfully" });
   } catch (error) {
     console.log(error);
     next(error);
@@ -90,18 +87,17 @@ export const updatePost = async (req, res, next) => {
 };
 
 export const deletePost = async (req, res, next) => {
-  console.log("Delete Post");
   const postId = req.params.postid;
   const userId = req.params.userid;
   if (userId !== req.user.id) {
-    console.log("Not authorised");
+    res.status(401).json({ message: "Not authorised" });
     return;
   }
 
   try {
     const deleted = await Post.findByIdAndDelete(postId);
 
-    res.status(200).json({ mesage: "Deleted successfully" });
+    res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     console.log(error);
     next(error);

@@ -5,7 +5,7 @@ export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      console.log(" no user");
+      res.status(400).json({ message: "User not found" });
       return;
     }
     res.status(200).json(user);
@@ -28,7 +28,11 @@ export const getUserBlogs = async (req, res, next) => {
 export const followUser = async (req, res, next) => {
   const targetId = req.params.id;
   const currentUserId = req.body.currentUser;
-  console.log(targetId, currentUserId);
+
+  if (currentUserId !== req.user.id) {
+    res.status(401).json({ message: "Not authorised" });
+    return;
+  }
 
   if (targetId === currentUserId) {
     return res.status(400).json({ message: "You can't follow yourself" });
@@ -51,7 +55,11 @@ export const followUser = async (req, res, next) => {
 export const unfollowUser = async (req, res, next) => {
   const targetId = req.params.id;
   const currentUserId = req.body.currentUser;
-  console.log(targetId, currentUserId);
+
+  if (currentUserId !== req.user.id) {
+    res.status(401).json({ message: "Not authorised" });
+    return;
+  }
 
   if (targetId === currentUserId) {
     return res.status(400).json({ message: "You can't unfollow yourself" });
@@ -64,18 +72,16 @@ export const unfollowUser = async (req, res, next) => {
     await User.findByIdAndUpdate(currentUserId, {
       $pull: { following: targetId },
     });
-    res.status(200).json({ message: "Followed successfully" });
+    res.status(200).json({ message: "Unfollowed successfully" });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
 
 export const updateUser = async (req, res, next) => {
-  console.log("Update user");
   const userId = req.params.id;
   if (userId !== req.user.id) {
-    console.log("Not authorised");
+    res.status(401).json({ message: "Not authorised" });
     return;
   }
 
@@ -88,14 +94,14 @@ export const updateUser = async (req, res, next) => {
           fullName: req.body.fullName,
           email: req.body.email,
           bio: req.body.bio,
+          avatar: req.body.avatar,
         },
       },
       { new: true }
     );
 
-    res.status(200).json({ mesage: "Updated successfully", user: update });
+    res.status(200).json({ message: "Updated successfully", user: update });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -104,7 +110,7 @@ export const deleteUser = async (req, res, next) => {
   console.log("Delete user");
   const userId = req.params.id;
   if (userId !== req.user.id) {
-    console.log("Not authorised");
+    res.status(401).json({ message: "Not authorised" });
     return;
   }
 
@@ -112,7 +118,7 @@ export const deleteUser = async (req, res, next) => {
     const deleted = await User.findByIdAndDelete(userId);
     const deletePosts = await Post.deleteMany({ author: userId });
 
-    res.status(200).json({ mesage: "Deleted successfully" });
+    res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     console.log(error);
     next(error);

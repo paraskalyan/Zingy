@@ -13,8 +13,8 @@ const router = express.Router();
 router.get("/getUserBlogs/:id", getUserBlogs);
 router.put("/updateuser/:id", verifyToken, updateUser);
 router.delete("/deleteuser/:id", verifyToken, deleteUser);
-router.post("/:id/follow", followUser);
-router.post("/:id/unfollow", unfollowUser);
+router.post("/:id/follow", verifyToken, followUser);
+router.post("/:id/unfollow", verifyToken, unfollowUser);
 router.get("/:id", getUser);
 
 export default router;

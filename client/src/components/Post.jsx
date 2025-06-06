@@ -18,12 +18,12 @@ const Post = ({ blog }) => {
     if (loading) return <Skeleton />
 
     return (
-        <div onClick={openBlogPage} className=' space-y-2 flex bg-[#fafafa] flex-col justify-between cursor-pointer hover:bg-[#f8f8f8] p-3 border border-[#e9e9e9] rounded-2xl'>
-            <img className=' rounded-t-2xl hover:brightness-90' src='https://codesupply.co/_next/image/?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fix6yojsv%2Fproduction%2Ffb67e96e45b30f4f561fe34b54e9fa866ea5ad9d-1600x900.webp&w=1080&q=95' />
+        <div onClick={openBlogPage} className=' space-y-1 flex bg-[#fafafa] flex-col justify-between  cursor-pointer hover:bg-[#f8f8f8] p-3 border border-[#e9e9e9] rounded-2xl'>
+            <img className=' rounded-t-2xl hover:brightness-90' src={blog.image} />
             <h6 className='text-[14px] text-gray-700'>{blog.category}</h6>
             <h1 className='text-xl font-bold break-words'>{blog.title}</h1>
-            {/* <h3 className='text-gray-700 text-[14px]' dangerouslySetInnerHTML={{ __html: blog.content }}>   </h3> */}
-            <div className='flex gap-4 mt-3'>
+            {/* <h3 className='text-gray-700 text-[14px]' dangerouslySetInnerHTML={{ __html: blog.content }}></h3> */}
+            <div className='flex gap-4 mt-1'>
                 <img width={20} className='rounded-full' src={user.avatar} />
                 <h6 className='text-gray-700 text-[14px]'>{user.fullName}</h6>
             </div>
