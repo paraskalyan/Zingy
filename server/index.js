@@ -8,6 +8,9 @@ import userRoutes from "./routes/user.js";
 import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import cookieParser from "cookie-parser";
+import path from "path";
+
+const __dirname = path.resolve();
 
 const app = express();
 const port = 4000;
@@ -42,6 +45,14 @@ app.use("/api/blog", blogRoutes);
 app.use("/api/user", userRoutes);
 
 app.use(errorHandler);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+
+  app.get("*name", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+  });
+}
 
 // app.use("/api/auth", authRoutes);
 // app.use("/api/blogs", blogRoutes);
