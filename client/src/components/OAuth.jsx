@@ -5,6 +5,8 @@ import { signIn } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { Button } from "flowbite-react";
 import { FaGoogle } from "react-icons/fa";
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
 
 export default function OAuth({ text }) {
     const dispatch = useDispatch();
@@ -16,7 +18,7 @@ export default function OAuth({ text }) {
         try {
             const resultsFromGoogle = await signInWithPopup(auth, provider);
             console.log(resultsFromGoogle);
-            const res = await fetch("http://localhost:4000/api/auth/google", {
+            const res = await fetch(`${baseUrl}/auth/google`, {
                 method: "POST",
                 credentials: 'include',
                 headers: { "Content-Type": "application/json" },

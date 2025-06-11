@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router'
 import Skeleton from '../components/Skeleton';
 import { storage } from '../appwrite';
 import { ID } from 'appwrite';
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
+
 const Write = () => {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -69,7 +72,7 @@ const Write = () => {
         e.preventDefault();
         console.log('Form Data:', formData);
         try {
-            const res = await axios.post('http://localhost:4000/api/blog/create', formData, {
+            const res = await axios.post(`${baseUrl}/blog/create`, formData, {
                 withCredentials: true
             })
             if (res) {

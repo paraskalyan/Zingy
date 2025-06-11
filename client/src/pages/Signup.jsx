@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux'
 import OAuth from '../components/OAuth'
 import { Link } from 'react-router'
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
+
 const Signup = () => {
     const user = useSelector((state) => state.user.currentUser)
     console.log("Selector value changed:", user);
@@ -38,7 +41,7 @@ const Signup = () => {
         else {
             try {
 
-                const res = await axios.post('http://localhost:4000/api/auth/signup', trimmedData)
+                const res = await axios.post(`${baseUrl}/auth/signup`, trimmedData)
                 if (res) {
                     console.log(res.data.message)
                     setSuccess(true)

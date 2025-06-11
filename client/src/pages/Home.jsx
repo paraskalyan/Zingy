@@ -22,6 +22,8 @@ const quotes = [
     "Great things never came from comfort zones."
 ];
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
 
 
 const Home = () => {
@@ -36,7 +38,7 @@ const Home = () => {
         const fetchBlogs = async () => {
             try {
                 console.log("gone")
-                const res = await axios.get(`http://localhost:4000/api/blog/getAll?search=${searchQuery}`)
+                const res = await axios.get(`${baseUrl}/blog/getAll?search=${searchQuery}`)
                 // setBlogs(res.data)
                 dispatch(setBlogs(res.data))
 

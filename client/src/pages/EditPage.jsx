@@ -5,6 +5,9 @@ import ReactQuill from 'react-quill-new'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
+
 function EditPage() {
     const { postId } = useParams();
 
@@ -15,7 +18,7 @@ function EditPage() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/api/blog/${postId}`)
+                const res = await axios.get(`${baseUrl}/blog/${postId}`)
                 console.log(res.data)
                 setFormData(res.data)
             }
@@ -31,7 +34,7 @@ function EditPage() {
         console.log(formData)
 
         try {
-            const res = await axios.put(`http://localhost:4000/api/blog/updatepost/${postId}/${currentUser._id}`, formData, {
+            const res = await axios.put(`${baseUrl}/blog/updatepost/${postId}/${currentUser._id}`, formData, {
                 withCredentials: true
             })
             console.log(res)

@@ -8,6 +8,9 @@ import { HiCheck } from 'react-icons/hi'
 import { storage } from '../appwrite'
 import { ID } from 'appwrite'
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
+
 const EditProfile = ({ openModal, setOpenModal, user, setUser }) => {
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
@@ -71,7 +74,7 @@ const EditProfile = ({ openModal, setOpenModal, user, setUser }) => {
 
         try {
             setLoading(true);
-            const res = await axios.put(`http://localhost:4000/api/user/updateuser/${user._id}`, updatedData, {
+            const res = await axios.put(`${baseUrl}/user/updateuser/${user._id}`, updatedData, {
                 withCredentials: true,
             });
 

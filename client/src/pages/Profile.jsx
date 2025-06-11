@@ -10,6 +10,9 @@ import EditProfile from '../components/EditProfile'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { signOut } from '../redux/user/userSlice'
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
+
 const Profile = () => {
     const { id } = useParams();
     // const { user, loading, setUser } = useFetchUser(id);
@@ -29,7 +32,7 @@ const Profile = () => {
 
         const getUser = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/api/user/${id}`);
+                const res = await axios.get(`${baseUrl}/user/${id}`);
                 setUser(res.data);
             } catch (error) {
                 console.error("Failed to fetch user:", error);
@@ -52,7 +55,7 @@ const Profile = () => {
     useEffect(() => {
         const getUserBlogs = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/api/user/getUserBlogs/${id}`);
+                const res = await axios.get(`${baseUrl}/user/getUserBlogs/${id}`);
                 setBlogs(res.data);
             } catch (error) {
                 console.log('Failed to fetch blogs:', error);
@@ -69,8 +72,8 @@ const Profile = () => {
         setFollowers(updatedFollowers);
 
         const endpoint = isFollowing
-            ? `http://localhost:4000/api/user/${targetId}/unfollow`
-            : `http://localhost:4000/api/user/${targetId}/follow`;
+            ? `${baseUrl}/user/${targetId}/unfollow`
+            : `${baseUrl}/user/${targetId}/follow`;
 
         try {
             await axios.post(endpoint, { currentUser: currentId }, { withCredentials: true });
@@ -84,7 +87,7 @@ const Profile = () => {
 
     const deleteAccount = async () => {
         try {
-            const res = await axios.delete(`http://localhost:4000/api/user/deleteuser/${currentUser._id}`, {
+            const res = await axios.delete(`${baseUrl}/user/deleteuser/${currentUser._id}`, {
                 withCredentials: true,
             })
             console.log(res.data)

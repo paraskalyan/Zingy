@@ -8,6 +8,9 @@ import { Link, useNavigate } from 'react-router'
 import OAuth from '../components/OAuth'
 import { HiExclamation } from 'react-icons/hi'
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
+
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -27,7 +30,7 @@ const Login = () => {
 
         try {
 
-            const res = await axios.post('http://localhost:4000/api/auth/login', formData, {
+            const res = await axios.post(`${baseUrl}/auth/login`, formData, {
                 withCredentials: true,
             })
             if (res) {

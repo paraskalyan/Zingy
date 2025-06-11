@@ -23,6 +23,8 @@ const modalTheme = {
     }
 }
 
+const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:4000/api" : "/api";
 
 function BlogPage() {
     const { id } = useParams();
@@ -38,7 +40,7 @@ function BlogPage() {
 
         const fetchBlog = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/api/blog/${id}`)
+                const res = await axios.get(`${baseUrl}/blog/${id}`)
                 if (res) setBlog(res.data)
             }
             catch (error) {
@@ -55,7 +57,7 @@ function BlogPage() {
 
     const handlePostDelete = async () => {
         try {
-            const res = await axios.delete(`http://localhost:4000/api/blog/deletepost/${id}/${currentUser._id}`, {
+            const res = await axios.delete(`${baseUrl}/blog/deletepost/${id}/${currentUser._id}`, {
                 withCredentials: true
             })
             console.log(res)
